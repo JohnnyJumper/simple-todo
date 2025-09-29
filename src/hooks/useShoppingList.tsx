@@ -13,7 +13,33 @@ export type ShoppingItem = {
 };
 const STORAGE_KEY = "shopping:list:v1";
 
-function getFromLocalStorage(): State {
+/**
+ * To-do: Delete dev boolean and mock data
+ */
+function getFromLocalStorage(dev?: boolean): State {
+  if (dev) {
+    const items: ShoppingItem[] = [
+      {
+        id: "1",
+        completed: true,
+        quantity: 1,
+        description: "Buy milk",
+        name: "Milk",
+      },
+      {
+        id: "2",
+        completed: false,
+        quantity: 3,
+        description: "Special Brand",
+        name: "Eggs",
+      },
+    ];
+
+    return items.reduce(
+      (acc, curr) => ({ ...acc, items: { ...acc.items, [curr.id]: curr } }),
+      {} as State,
+    );
+  }
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     const parsed: State = raw ? JSON.parse(raw) : null;
@@ -29,8 +55,8 @@ function newId(): string {
   return `${ts}-${rnd}`;
 }
 
-export function useShoppingList() {
-  const [state, setState] = useState<State>(() => getFromLocalStorage());
+export function useShoppingList(dev?: boolean) {
+  const [state, setState] = useState<State>(() => getFromLocalStorage(dev));
 
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
