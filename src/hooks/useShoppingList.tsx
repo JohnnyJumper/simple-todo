@@ -96,5 +96,11 @@ export function useShoppingList() {
     });
   }, []);
 
-  return { items: state.items, addItem, editItem, removeItem, toggleItem };
+  return {
+    items: Object.values(state.items),
+    addItem,
+    editItem,
+    removeItem,
+    toggleItem,
+  };
 }
