@@ -17,6 +17,7 @@ export default function Header() {
         fontSize="1.125em"
         letterSpacing="0.25px"
         fontWeight="600"
+        fontFamily="Dosis"
         sx={{
           textTransform: "uppercase",
           paddingLeft: "30px",

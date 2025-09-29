@@ -2,9 +2,8 @@ import { createTheme } from "@mui/material/styles";
 
 const theme = createTheme({
   typography: {
-    fontFamily: "Dosis, Nunito, sans-serif",
+    fontFamily: "Nunito, sans-serif",
     caption: {
-      fontFamily: "Nunito",
       fontSize: "18px",
       lineHeight: "24px",
       letterSpacing: "0px",
@@ -15,7 +14,9 @@ const theme = createTheme({
     primary: {
       main: "#4D81B7",
     },
+    black: "#000000",
     grey: {
+      400: "#7D7A7A",
       500: "#87898C",
     },
   },
@@ -25,7 +26,19 @@ const theme = createTheme({
         {
           props: { variant: "caption" },
           style: ({ theme }) => ({
+            fontFamily: "Nunito, sans-serif",
             color: theme.palette.grey[500],
+          }),
+        },
+        {
+          props: { variant: "description" },
+          style: ({ theme }) => ({
+            color: theme.palette.grey[400],
+            fontFamily: "Nunito, sans-serif",
+            fontWeight: 600,
+            fontSize: "14px",
+            letterSpacing: "0px",
+            lineHeight: "20px",
           }),
         },
       ],
