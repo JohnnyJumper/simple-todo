@@ -1,12 +1,17 @@
+import { useState } from "react";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import { useShoppingList } from "../hooks/useShoppingList";
+import ShopItem from "./ShopItem";
 
 export default function ShoppingList() {
-  const { items } = useShoppingList();
+  const { items, editItem, removeItem, toggleItem } = useShoppingList(true);
 
-  if (items.length === 0)
+  const [selectedItem, setSelectedItem] = useState<string | null>(
+    items[0]?.id ?? null,
+  );
+  if (items.length === 0) {
     return (
       <Container
         sx={{
@@ -16,7 +21,23 @@ export default function ShoppingList() {
         <EmptyShoppingList />
       </Container>
     );
-  return <Container></Container>;
+  }
+
+  return (
+    <Container>
+      {items.map((item, index) => (
+        <ShopItem
+          item={item}
+          key={index}
+          selected={selectedItem === item.id}
+          onClick={() => setSelectedItem(item.id)}
+          onItemToggle={(id) => toggleItem(id)}
+          onItemEdit={(id) => editItem(id, {})}
+          onItemRemoval={(id) => removeItem(id)}
+        />
+      ))}
+    </Container>
+  );
 }
 
 function EmptyShoppingList() {
