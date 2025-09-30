@@ -102,30 +102,32 @@ export function FormModal({
             ...paperProps?.sx,
           }}
         >
-          <Stack
-            direction="row"
-            alignItems="center"
-            justifyContent="space-between"
-            p={2}
-            width="100%"
-            bgcolor={(theme) => theme.palette.grey[300]}
-            borderBottom={`0.5px solid ${theme.palette.grey[200]}`}
-          >
-            <Typography
-              id={labelId}
-              variant="header"
-              color={theme.palette.dark3}
+          {titleNode && (
+            <Stack
+              direction="row"
+              alignItems="center"
+              justifyContent="space-between"
+              p={2}
+              width="100%"
+              bgcolor={(theme) => theme.palette.grey[300]}
+              borderBottom={`0.5px solid ${theme.palette.grey[200]}`}
             >
-              {titleNode}
-            </Typography>
-            <IconButton
-              aria-label="close"
-              onClick={() => onClose?.({}, "escapeKeyDown")}
-              size="small"
-            >
-              <span className="material-icons">close</span>
-            </IconButton>
-          </Stack>
+              <Typography
+                id={labelId}
+                variant="header"
+                color={theme.palette.dark3}
+              >
+                {titleNode}
+              </Typography>
+              <IconButton
+                aria-label="close"
+                onClick={() => onClose?.({}, "escapeKeyDown")}
+                size="small"
+              >
+                <span className="material-icons">close</span>
+              </IconButton>
+            </Stack>
+          )}
 
           <Box p={2} sx={{ flex: "1 1 auto", minHeight: 0 }}>
             {bodyNode}
@@ -133,7 +135,14 @@ export function FormModal({
 
           {withDivider && <Divider />}
           {actionsNode && (
-            <Box p={2} sx={{ pt: withDivider ? 2 : 0 }}>
+            <Box
+              p={2}
+              sx={{
+                pt: withDivider ? 2 : 0,
+                display: "flex",
+                justifyContent: "flex-end",
+              }}
+            >
               {actionsNode}
             </Box>
           )}
