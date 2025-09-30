@@ -31,8 +31,13 @@ export default function ShopItem({
         width: "100%",
         display: "flex",
         alignItems: "center",
+        gap: 1,
         backgroundColor: selected ? "#D5DFE92B" : "#FFFFFF",
-        padding: "16px 8px 16px 8px",
+        padding: "16px 8px",
+        border: "0.5px solid #D5DFE9",
+        borderRadius: "4px",
+        marginY: "10px",
+        minHeight: 87,
       }}
       {...props}
     >
@@ -56,7 +61,11 @@ export default function ShopItem({
         </Typography>
       </Container>
       <Box
-        sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "flex-end",
+        }}
       >
         <Button
           variant="text"

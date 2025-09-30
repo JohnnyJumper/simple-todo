@@ -41,6 +41,16 @@ const theme = createTheme({
             lineHeight: "20px",
           }),
         },
+        {
+          props: { variant: "body1" },
+          style: () => ({
+            fontWeight: 600,
+            fontSize: "1.125rem",
+            lineHeight: "24px",
+            letterSpacing: "0px",
+            fontFamily: "Nunito, sans-serif",
+          }),
+        },
       ],
     },
     MuiButton: {

@@ -6,7 +6,7 @@ import { useShoppingList } from "../hooks/useShoppingList";
 import ShopItem from "./ShopItem";
 
 export default function ShoppingList() {
-  const { items, editItem, removeItem, toggleItem } = useShoppingList(true);
+  const { items, editItem, removeItem, toggleItem } = useShoppingList();
 
   const [selectedItem, setSelectedItem] = useState<string | null>(
     items[0]?.id ?? null,
@@ -25,17 +25,33 @@ export default function ShoppingList() {
 
   return (
     <Container>
-      {items.map((item, index) => (
-        <ShopItem
-          item={item}
-          key={index}
-          selected={selectedItem === item.id}
-          onClick={() => setSelectedItem(item.id)}
-          onItemToggle={(id) => toggleItem(id)}
-          onItemEdit={(id) => editItem(id, {})}
-          onItemRemoval={(id) => removeItem(id)}
-        />
-      ))}
+      <Container
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          flexDirection: "row",
+          width: "100%",
+          marginTop: "35px",
+        }}
+      >
+        <Typography variant="body1">Your Items</Typography>
+        <Button variant="contained" size="large" sx={{ p: "8px 15px" }}>
+          Add Item
+        </Button>
+      </Container>
+      <Container>
+        {items.map((item, index) => (
+          <ShopItem
+            item={item}
+            key={index}
+            selected={selectedItem === item.id}
+            onClick={() => setSelectedItem(item.id)}
+            onItemToggle={(id) => toggleItem(id)}
+            onItemEdit={(id) => editItem(id, {})}
+            onItemRemoval={(id) => removeItem(id)}
+          />
+        ))}
+      </Container>
     </Container>
   );
 }
