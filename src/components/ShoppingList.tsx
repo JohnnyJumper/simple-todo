@@ -59,7 +59,7 @@ export default function ShoppingList() {
             selected={selectedItem === item.id}
             onClick={() => setSelectedItem(item.id)}
             onItemToggle={(id) => toggleItem(id)}
-            onItemEdit={(id) => editItem(id, {})}
+            onItemEdit={editItem}
             onItemRemoval={(id) => removeItem(id)}
           />
         ))}

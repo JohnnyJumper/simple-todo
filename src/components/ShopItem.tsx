@@ -1,13 +1,18 @@
+import { useState } from "react";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Checkbox from "@mui/material/Checkbox";
 import Button from "@mui/material/Button";
-import type { ShoppingItem } from "../hooks/useShoppingList";
+import type {
+  ShoppingItem,
+  PendingShoppingItem,
+} from "../hooks/useShoppingList";
+import EditItemModal from "../modals/EditItem";
 
 type ShopItemProps = {
   item: ShoppingItem;
-  onItemEdit: (id: string) => void;
+  onItemEdit: (id: string, update: Partial<PendingShoppingItem>) => void;
   onItemToggle: (id: string) => void;
   onItemRemoval: (id: string) => void;
   selected: boolean;
@@ -25,6 +30,16 @@ export default function ShopItem({
   onItemRemoval,
   ...props
 }: ShopItemProps) {
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const handleEdit = (item: ShoppingItem) => {
+    onItemEdit(item.id, {
+      ...item,
+    });
+  };
+
   return (
     <Container
       sx={{
@@ -67,11 +82,7 @@ export default function ShopItem({
           justifyContent: "flex-end",
         }}
       >
-        <Button
-          variant="text"
-          color="inherit"
-          onClick={() => onItemEdit(item.id)}
-        >
+        <Button variant="text" color="inherit" onClick={handleOpen}>
           <span className="material-icons">create</span>
         </Button>
         <Button
@@ -82,6 +93,12 @@ export default function ShopItem({
           <span className="material-icons">delete_outlined</span>
         </Button>
       </Box>
+      <EditItemModal
+        open={open}
+        item={item}
+        onClose={handleClose}
+        onEdit={handleEdit}
+      />
     </Container>
   );
 }
