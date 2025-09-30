@@ -109,6 +109,7 @@ export function FormModal({
             p={2}
             width="100%"
             bgcolor={(theme) => theme.palette.grey[300]}
+            borderBottom={`0.5px solid ${theme.palette.grey[200]}`}
           >
             <Typography
               id={labelId}
