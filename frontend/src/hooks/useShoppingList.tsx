@@ -5,7 +5,7 @@ export type State = {
 };
 
 export type ShoppingItem = {
-  id: string;
+  id: number;
   name: string;
   description?: string;
   quantity: number;
@@ -24,10 +24,10 @@ function getFromLocalStorage(): State {
   }
 }
 
-function newId(): string {
-  const ts = Date.now().toString(36);
-  const rnd = Math.floor(Math.random() * Number.MAX_SAFE_INTEGER).toString(36);
-  return `${ts}-${rnd}`;
+export function newId(): number {
+  const ts = Date.now();
+  const rnd = Math.floor(Math.random() * 1_000_000);
+  return ts * 1_000_000 + rnd;
 }
 
 export function useShoppingList() {
