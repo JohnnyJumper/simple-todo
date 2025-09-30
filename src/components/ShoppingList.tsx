@@ -4,9 +4,13 @@ import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import { useShoppingList } from "../hooks/useShoppingList";
 import ShopItem from "./ShopItem";
+import AddItemModal from "../modals/AddItem";
 
 export default function ShoppingList() {
   const { items, editItem, removeItem, toggleItem } = useShoppingList();
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const [selectedItem, setSelectedItem] = useState<string | null>(
     items[0]?.id ?? null,
@@ -18,7 +22,8 @@ export default function ShoppingList() {
           marginTop: "110px",
         }}
       >
-        <EmptyShoppingList />
+        <EmptyShoppingList handleOpen={handleOpen} />
+        <AddItemModal onClose={handleClose} open={open} />
       </Container>
     );
   }
@@ -35,9 +40,15 @@ export default function ShoppingList() {
         }}
       >
         <Typography variant="body1">Your Items</Typography>
-        <Button variant="contained" size="large" sx={{ p: "8px 15px" }}>
+        <Button
+          variant="contained"
+          size="large"
+          sx={{ p: "8px 15px" }}
+          onClick={handleOpen}
+        >
           Add Item
         </Button>
+        <AddItemModal open={open} onClose={handleClose} />
       </Container>
       <Container>
         {items.map((item, index) => (
@@ -56,7 +67,7 @@ export default function ShoppingList() {
   );
 }
 
-function EmptyShoppingList() {
+function EmptyShoppingList({ handleOpen }: { handleOpen: () => void }) {
   return (
     <Container
       sx={{
@@ -71,7 +82,12 @@ function EmptyShoppingList() {
       }}
     >
       <Typography variant="caption">Your shopping list is empty :(</Typography>
-      <Button variant="contained" size="large" sx={{ marginTop: "16px" }}>
+      <Button
+        variant="contained"
+        size="large"
+        sx={{ marginTop: "16px" }}
+        onClick={handleOpen}
+      >
         Add your first item
       </Button>
     </Container>
