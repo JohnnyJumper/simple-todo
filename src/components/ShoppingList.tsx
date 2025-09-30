@@ -7,7 +7,8 @@ import ShopItem from "./ShopItem";
 import AddItemModal from "../modals/AddItem";
 
 export default function ShoppingList() {
-  const { items, editItem, removeItem, toggleItem } = useShoppingList();
+  const { items, editItem, removeItem, toggleItem, addItem } =
+    useShoppingList();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -23,7 +24,7 @@ export default function ShoppingList() {
         }}
       >
         <EmptyShoppingList handleOpen={handleOpen} />
-        <AddItemModal onClose={handleClose} open={open} />
+        <AddItemModal onClose={handleClose} open={open} onAddTask={addItem} />
       </Container>
     );
   }
@@ -48,7 +49,7 @@ export default function ShoppingList() {
         >
           Add Item
         </Button>
-        <AddItemModal open={open} onClose={handleClose} />
+        <AddItemModal open={open} onClose={handleClose} onAddTask={addItem} />
       </Container>
       <Container>
         {items.map((item, index) => (

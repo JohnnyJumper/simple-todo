@@ -11,6 +11,7 @@ export type ShoppingItem = {
   quantity: number;
   completed: boolean;
 };
+export type PendingShoppingItem = Omit<ShoppingItem, "id">;
 const STORAGE_KEY = "shopping:list:v1";
 
 /**
@@ -62,7 +63,7 @@ export function useShoppingList(dev?: boolean) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
   }, [state]);
 
-  const addItem = useCallback((item: ShoppingItem) => {
+  const addItem = useCallback((item: PendingShoppingItem) => {
     const title = item.name.trim();
     if (!title) return;
 
@@ -78,30 +79,35 @@ export function useShoppingList(dev?: boolean) {
       quantity,
     };
     setState((prev) => ({
-      items: { ...prev.items, id: newItem },
+      items: { ...prev.items, [id]: newItem },
     }));
   }, []);
 
-  const editItem = useCallback((id: string, update: Partial<ShoppingItem>) => {
-    setState((prev) => {
-      const updated = prev.items[id];
-      if (!updated) return prev;
+  const editItem = useCallback(
+    (id: string, update: Partial<PendingShoppingItem>) => {
+      setState((prev) => {
+        const updated = prev.items[id];
+        if (!updated) return prev;
 
-      updated.completed = update?.completed ?? updated.completed;
-      updated.description = update?.description?.trim() ?? updated.description;
-      updated.quantity = Math.max(update?.quantity ?? updated.quantity, 1);
-      updated.name = update?.name?.trim() ?? updated.name;
+        updated.completed = update?.completed ?? updated.completed;
+        updated.description =
+          update?.description?.trim() ?? updated.description;
+        updated.quantity = Math.max(update?.quantity ?? updated.quantity, 1);
+        updated.name = update?.name?.trim() ?? updated.name;
 
-      return {
-        ...prev,
-        items: { ...prev.items, [id]: updated },
-      };
-    });
-  }, []);
+        return {
+          ...prev,
+          items: { ...prev.items, [id]: updated },
+        };
+      });
+    },
+    [],
+  );
 
   const removeItem = useCallback((id: string) => {
     setState((prev) => {
       if (!prev.items[id]) return prev;
+
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { [id]: _, ...rest } = prev.items;
       return { items: rest };
