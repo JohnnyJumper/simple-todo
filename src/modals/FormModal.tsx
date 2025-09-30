@@ -39,7 +39,7 @@ function isElementOf<T extends React.ElementType>(
 }
 
 /**
- * This high order compount component expects to receive FormTitle, FormBody and FormActions nodes to properly display itself.
+ * This high order compound component expects to receive FormTitle, FormBody and FormActions nodes to properly display itself.
  **/
 export function FormModal({
   children,
