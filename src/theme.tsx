@@ -16,9 +16,11 @@ const theme = createTheme({
     },
     black: "#000000",
     grey: {
+      300: "#FAFAFA",
       400: "#7D7A7A",
       500: "#87898C",
     },
+    dark3: "#5C6269",
   },
   components: {
     MuiTypography: {
@@ -39,6 +41,18 @@ const theme = createTheme({
             fontSize: "14px",
             letterSpacing: "0px",
             lineHeight: "20px",
+          }),
+        },
+        {
+          props: { variant: "header" },
+          style: ({ theme }) => ({
+            color: theme.palette.grey[300],
+            display: "block",
+            fontFamily: "Dosis",
+            fontWeight: 600,
+            fontSize: "1.125rem",
+            letterSpacing: "0.25px",
+            textTransform: "uppercase",
           }),
         },
         {
