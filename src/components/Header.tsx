@@ -13,16 +13,10 @@ export default function Header() {
       }}
     >
       <Typography
-        variant="h6"
-        fontSize="1.125em"
-        letterSpacing="0.25px"
-        fontWeight="600"
-        fontFamily="Dosis"
+        variant="header"
+        color="#FFFFFF"
         sx={{
-          textTransform: "uppercase",
-          paddingLeft: "30px",
-          paddingTop: "20px",
-          paddingBottom: "20px",
+          padding: "20px 0px 20px 30px",
         }}
       >
         Shopping List
