@@ -9,6 +9,7 @@ import type {
   PendingShoppingItem,
 } from "../hooks/useShoppingList";
 import EditItemModal from "../modals/EditItem";
+import DeleteItemModal from "../modals/DeleteItem";
 
 type ShopItemProps = {
   item: ShoppingItem;
@@ -30,14 +31,22 @@ export default function ShopItem({
   onItemRemoval,
   ...props
 }: ShopItemProps) {
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const [editOpen, setEditOpen] = useState(false);
+  const handleEditOpen = () => setEditOpen(true);
+  const handleEditClose = () => setEditOpen(false);
+
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  const handleDeleteOpen = () => setDeleteOpen(true);
+  const handleDeleteClose = () => setDeleteOpen(false);
 
   const handleEdit = (item: ShoppingItem) => {
     onItemEdit(item.id, {
       ...item,
     });
+  };
+
+  const handleDelete = (id: string) => {
+    onItemRemoval(id);
   };
 
   return (
@@ -82,21 +91,24 @@ export default function ShopItem({
           justifyContent: "flex-end",
         }}
       >
-        <Button variant="text" color="inherit" onClick={handleOpen}>
+        <Button variant="text" color="inherit" onClick={handleEditOpen}>
           <span className="material-icons">create</span>
         </Button>
-        <Button
-          variant="text"
-          color="inherit"
-          onClick={() => onItemRemoval(item.id)}
-        >
+        <Button variant="text" color="inherit" onClick={handleDeleteOpen}>
           <span className="material-icons">delete_outlined</span>
         </Button>
       </Box>
-      <EditItemModal
-        open={open}
+
+      <DeleteItemModal
+        open={deleteOpen}
         item={item}
-        onClose={handleClose}
+        onClose={handleDeleteClose}
+        onDelete={handleDelete}
+      />
+      <EditItemModal
+        open={editOpen}
+        item={item}
+        onClose={handleEditClose}
         onEdit={handleEdit}
       />
     </Container>
