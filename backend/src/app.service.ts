@@ -116,7 +116,7 @@ export class AppService {
     item.description = item.description?.trim();
     if (item.quantity <= 0) item.quantity = 1;
     if (!item.name) {
-      throw new HttpException('item must have a title', HttpStatus.BAD_REQUEST);
+      throw new BadRequestException('item must have a title');
     }
     return item;
   }
