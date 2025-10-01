@@ -4,18 +4,15 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Checkbox from "@mui/material/Checkbox";
 import Button from "@mui/material/Button";
-import type {
-  ShoppingItem,
-  PendingShoppingItem,
-} from "../hooks/useShoppingList";
 import EditItemModal from "../modals/EditItem";
 import DeleteItemModal from "../modals/DeleteItem";
+import type { ShoppingItem, PendingShoppingItem } from "../api/shoppingApi";
 
 type ShopItemProps = {
   item: ShoppingItem;
-  onItemEdit: (id: string, update: Partial<PendingShoppingItem>) => void;
-  onItemToggle: (id: string) => void;
-  onItemRemoval: (id: string) => void;
+  onItemEdit: (id: number, update: Partial<PendingShoppingItem>) => void;
+  onItemToggle: (id: number) => void;
+  onItemRemoval: (id: number) => void;
   selected: boolean;
 } & React.ComponentProps<typeof Container>;
 
@@ -45,7 +42,7 @@ export default function ShopItem({
     });
   };
 
-  const handleDelete = (id: string) => {
+  const handleDelete = (id: number) => {
     onItemRemoval(id);
   };
 

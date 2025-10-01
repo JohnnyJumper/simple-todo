@@ -1,21 +1,41 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
-import { useShoppingList } from "../hooks/useShoppingList";
+import { useShopping } from "../hooks/useShopping";
 import ShopItem from "./ShopItem";
 import AddItemModal from "../modals/AddItem";
+import { createHttpShoppingApi } from "../api/httpShoppingApi";
+import CircularProgress from "@mui/material/CircularProgress";
 
 export default function ShoppingList() {
-  const { items, editItem, removeItem, toggleItem, addItem } =
-    useShoppingList();
+  const api = useMemo(() => createHttpShoppingApi("http://localhost:3000"), []);
+  const { list, create, update, remove } = useShopping(api);
+
+  const items = list.data ?? [];
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const [selectedItem, setSelectedItem] = useState<string | null>(
+  const [selectedItem, setSelectedItem] = useState<number | null>(
     items[0]?.id ?? null,
   );
+
+  if (list.isLoading && items.length === 0) {
+    return (
+      <Container
+        sx={{
+          marginTop: "110px",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <CircularProgress />
+      </Container>
+    );
+  }
+
   if (items.length === 0) {
     return (
       <Container
@@ -24,7 +44,11 @@ export default function ShoppingList() {
         }}
       >
         <EmptyShoppingList handleOpen={handleOpen} />
-        <AddItemModal onClose={handleClose} open={open} onAddTask={addItem} />
+        <AddItemModal
+          onClose={handleClose}
+          open={open}
+          onAddTask={(item) => create(item)}
+        />
       </Container>
     );
   }
@@ -49,7 +73,11 @@ export default function ShoppingList() {
         >
           Add Item
         </Button>
-        <AddItemModal open={open} onClose={handleClose} onAddTask={addItem} />
+        <AddItemModal
+          open={open}
+          onClose={handleClose}
+          onAddTask={(item) => create(item)}
+        />
       </Container>
       <Container>
         {items.map((item, index) => (
@@ -58,9 +86,11 @@ export default function ShoppingList() {
             key={index}
             selected={selectedItem === item.id}
             onClick={() => setSelectedItem(item.id)}
-            onItemToggle={(id) => toggleItem(id)}
-            onItemEdit={editItem}
-            onItemRemoval={(id) => removeItem(id)}
+            onItemToggle={(id) =>
+              update({ id, patch: { completed: !item.completed } })
+            }
+            onItemEdit={(id, patch) => update({ id, patch })}
+            onItemRemoval={(id) => remove(id)}
           />
         ))}
       </Container>

@@ -6,7 +6,7 @@ import TextField from "@mui/material/TextField";
 import Checkbox from "@mui/material/Checkbox";
 import Box from "@mui/material/Box";
 import { FormModal, FormBody, FormActions, FormTitle } from "./FormModal.tsx";
-import type { ShoppingItem } from "../hooks/useShoppingList.tsx";
+import type { ShoppingItem } from "../api/shoppingApi";
 
 export default function EditItemModal({
   onClose,

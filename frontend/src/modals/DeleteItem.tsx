@@ -3,8 +3,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import { FormModal, FormBody, FormActions } from "./FormModal.tsx";
-import type { ShoppingItem } from "../hooks/useShoppingList.tsx";
-
+import type { ShoppingItem } from "../api/shoppingApi";
 export default function DeleteItemModal({
   onClose,
   open,
@@ -12,7 +11,7 @@ export default function DeleteItemModal({
   item,
 }: {
   onClose: () => void;
-  onDelete: (id: string) => void;
+  onDelete: (id: number) => void;
   open: boolean;
   item: ShoppingItem;
 }) {
