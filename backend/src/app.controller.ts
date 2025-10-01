@@ -9,20 +9,20 @@ import {
   ParseIntPipe,
   NotFoundException,
   ParseArrayPipe,
+  Logger,
 } from '@nestjs/common';
 import { AppService } from './app.service';
 import type { PendingShoppingItem } from './types';
 
 @Controller('/v1/items')
 export class AppController {
+  private readonly logger: Logger = new Logger('AppController');
   constructor(private readonly appService: AppService) {}
 
   @Get()
   async getActiveItems() {
     const items = await this.appService.getShoppingItems();
-    return {
-      items: items.map(({ deleted, ...item }) => item),
-    };
+    return items.map(({ deleted, ...item }) => item);
   }
 
   @Get(':id')
@@ -36,7 +36,7 @@ export class AppController {
   }
 
   @Post()
-  async createNewItem(item: PendingShoppingItem) {
+  async createNewItem(@Body() item: PendingShoppingItem) {
     return this.appService.createShoppingItem(item);
   }
 
