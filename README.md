@@ -40,8 +40,7 @@ The app allows managing a shopping list (add/edit/delete/toggle items) with pers
 1. **Clone the repo**
 
    ```bash
-   git clone <your-repo-url>
-   cd veritone-tech
+   git clone git@github.com:JohnnyJumper/simple-todo
    ```
 
 2. **Build and start the containers**
@@ -62,10 +61,11 @@ The app allows managing a shopping list (add/edit/delete/toggle items) with pers
 
 The backend exposes a REST API (NestJS + Prisma). Example routes:
 
-- `GET /shopping-items` → list items
-- `POST /shopping-items` → add item
-- `PATCH /shopping-items/:id` → edit item
-- `DELETE /shopping-items/:id` → remove item
+- `GET /v1/items` → list items
+- `GET /v1/items/:id` → get single item
+- `POST /v1/items` → add item
+- `PATCH /v1/items/:id` → edit item
+- `DELETE /v1/items/:id` → remove item
 
 ---
 
@@ -73,13 +73,6 @@ The backend exposes a REST API (NestJS + Prisma). Example routes:
 
 - Built with React + Vite + MUI
 - Uses **TanStack Query** for data fetching and caching
-- Configurable API base URL at build time:
-
-  ```bash
-  VITE_API_BASE_URL=http://localhost:3000
-  ```
-
-  (This is already wired in the Docker build.)
 
 ---
 
