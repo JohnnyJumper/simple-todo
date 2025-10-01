@@ -4,7 +4,7 @@ import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import { FormModal, FormBody, FormActions, FormTitle } from "./FormModal.tsx";
-import type { PendingShoppingItem } from "../hooks/useShoppingList.tsx";
+import type { PendingShoppingItem } from "../api/shoppingApi";
 
 const initial: PendingShoppingItem = {
   name: "",
